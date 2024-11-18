@@ -1,0 +1,47 @@
+/* 分类导航链接的基础样式 */
+.category-links {
+    display: flex;
+    gap: 1rem;
+    position: relative;
+}
+
+/* 添加上方黄线 */
+.category-links::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #FDD108;
+    width: 100%;
+}
+
+/* 清除所有链接的默认样式和边框 */
+.category-links a {
+    text-decoration: none;
+    color: #333;
+    padding: 0.5rem 1rem;
+    border: none;
+    background: none;
+    outline: none;
+    box-shadow: none;
+}
+
+/* 激活状态的样式 */
+.category-links a.active {
+    color: #013453;
+    font-weight: 500;
+    position: relative;
+}
+
+/* 移除所有可能的边框和背景 */
+.category-links,
+.category-links a,
+.category-links a:hover,
+.category-links a:focus,
+.category-links a:active {
+    border: none;
+    box-shadow: none;
+    background: none;
+} 

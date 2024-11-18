@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- ... -->
+</head>
+<body>
+    <div class="top-nav">
+        <div class="logo">
+            <a href="home.html">
+                <img src="images/logo-03.svg" alt="世界大脑">
+            </a>
+        </div>
+        <div class="user-actions">
+            <a href="index.html" class="login">登录</a>
+            <a href="register.html" class="register">注册</a>
+        </div>
+    </div>
+    <!-- ... -->
+</body>
+</html> 

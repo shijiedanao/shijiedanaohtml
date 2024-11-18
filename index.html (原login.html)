@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!-- ... -->
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-logo">
+                <a href="home.html">
+                    <img src="images/logo-03.svg" alt="世界大脑">
+                </a>
+            </div>
+            <!-- ... -->
+        </div>
+    </div>
+</body>
+</html> 

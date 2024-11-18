@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>世界大脑</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="top-nav">
+        <div class="logo">
+            <a href="index.html">
+                <img src="images/logo-03.svg" alt="世界大脑">
+            </a>
+        </div>
+        <div class="user-actions">
+            <a href="login.html" class="login">登录</a>
+            <a href="register.html" class="register">注册</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header-wrapper">
+            <div class="title-group">
+                <div class="title-section">
+                    <h1>
+                        <span class="blue">7×24</span>
+                        <span class="black">小时全球实时AI新闻</span>
+                        <span class="blue">直播</span>
+                    </h1>
+                    <div class="subtitle">让一部分人先进入AI时代</div>
+                </div>
+            </div>
+
+            <div class="current-time">
+                <span class="day-number">18</span>
+                <div class="date-info">
+                    <span class="month">11</span>
+                    <span class="year">2024</span>
+                    <span class="weekday">星期一</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="news-content-wrapper">
+            <nav class="category-nav">
+                <div class="category-links">
+                    <a href="#" class="active">全部</a>
+                    <a href="#">大模型</a>
+                    <a href="#">绘画</a>
+                    <a href="#">写作</a>
+                    <a href="#">编程</a>
+                    <a href="#">语音</a>
+                    <a href="#">视频</a>
+                    <a href="#">其他</a>
+                </div>
+                <div class="news-filter">
+                    <label><input type="checkbox" id="soundAlert"> 声音提醒</label>
+                    <label>
+                        <input type="checkbox" id="autoRefresh">
+                        <span class="refresh-text">
+                            <span id="countdown">60</span><span>s</span>后刷新
+                        </span>
+                    </label>
+                </div>
+            </nav>
+            <div class="news-list">
+                <!-- 运行 NewsGenerator 生成的200条新闻数据将替换这里 -->
+                {{ 正在运行程序生成数据... }}
+            </div>
+        </div>
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html> 
