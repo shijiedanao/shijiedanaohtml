@@ -638,7 +638,7 @@ body {
     box-shadow: none;
 }
 
-/* ���显示容 */
+/* 显示容 */
 .current-time {
     display: inline-flex;
     align-items: center;
@@ -1076,7 +1076,7 @@ body {
     }
     
     .category-links a {
-        font-size: 2.8vw; /* 减���体 */
+        font-size: 2.8vw; /* 减体 */
         padding: 0.2rem 0.4rem; /* 减小内边距 */
         white-space: nowrap;
         flex-shrink: 0;
@@ -1195,5 +1195,137 @@ body {
     margin-left: 30px;
     width: calc(100% - 30px);
     transition: background-color 0.3s ease;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 767px) {
+    /* 容器宽度调整 */
+    .container {
+        padding: 0 10px;
+        overflow-x: hidden;
+    }
+
+    /* 标题样式调整 */
+    .title-section h1 {
+        font-size: 24px !important;
+        white-space: normal;
+        flex-wrap: wrap;
+        line-height: 1.3;
+    }
+
+    /* 时间显示区域调整 */
+    .current-time {
+        width: 140px;
+        height: 50px;
+        padding: 3px;
+    }
+
+    .day-number {
+        font-size: 3rem;
+    }
+
+    .month {
+        font-size: 1.2rem;
+    }
+
+    .year, .weekday {
+        font-size: 0.7rem;
+    }
+
+    /* 分类导航调整 */
+    .category-nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .category-links {
+        width: 100%;
+        padding-left: 0;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .category-links a {
+        font-size: 14px;
+        padding: 0.2rem 0.8rem;
+    }
+
+    .news-filter {
+        width: 100%;
+        justify-content: flex-end;
+        font-size: 12px;
+        gap: 1rem;
+    }
+
+    /* 新闻列表调整 */
+    .news-item {
+        margin-left: 20px;
+        padding: 10px 0 8px 10px;
+    }
+
+    .news-list::before {
+        left: 20px;
+    }
+
+    .news-item::before {
+        left: 0;
+    }
+
+    .news-time {
+        font-size: 12px;
+        min-width: 45px;
+    }
+
+    .news-title {
+        font-size: 14px;
+    }
+
+    .news-category {
+        font-size: 12px;
+    }
+
+    .news-detail {
+        font-size: 12px;
+    }
+
+    /* 分享按钮调整 */
+    .share-btn {
+        right: 10px;
+    }
+
+    .share-icon {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* Logo调整 */
+    .logo img {
+        height: 30px;
+    }
+
+    /* 顶部导航调整 */
+    .top-nav {
+        padding: 0 10px;
+    }
+
+    .user-actions {
+        gap: 10px;
+    }
+
+    .user-actions a {
+        font-size: 12px;
+    }
+}
+
+/* 超小屏幕适配 */
+@media screen and (max-width: 320px) {
+    .title-section h1 {
+        font-size: 20px !important;
+    }
+
+    .category-links a {
+        font-size: 12px;
+        padding: 0.2rem 0.6rem;
+    }
 }
  
