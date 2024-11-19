@@ -29,38 +29,8 @@
     <div class="container">
         <div class="login-container">
             <h2>登录</h2>
-            <!-- 登录方式切换 -->
-            <div class="login-type-switch">
-                <button class="switch-btn active" data-type="password">密码登录</button>
-                <button class="switch-btn" data-type="verify">验证码登录</button>
-            </div>
-
-            <!-- 密码登录表单 -->
-            <form class="login-form" id="passwordLoginForm">
-                <div class="form-group">
-                    <div class="input-with-select">
-                        <input type="text" id="account" placeholder="请输入手机号/邮箱" required>
-                        <select class="account-type-select">
-                            <option value="phone">手机号</option>
-                            <option value="email">邮箱</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="password" id="password" placeholder="请输入密码" required>
-                </div>
-                <div class="form-options">
-                    <label>
-                        <input type="checkbox" id="remember">
-                        记住我
-                    </label>
-                    <a href="forgot-password.html" class="forgot-password">忘记密码？</a>
-                </div>
-                <button type="submit" class="login-btn">登录</button>
-            </form>
-
             <!-- 验证码登录表单 -->
-            <form class="login-form hidden" id="verifyLoginForm">
+            <form class="login-form" id="verifyLoginForm">
                 <div class="form-group">
                     <div class="input-with-select">
                         <input type="text" id="verifyAccount" placeholder="请输入手机号/邮箱" required>
