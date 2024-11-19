@@ -25,12 +25,17 @@ body {
 .user-actions {
     display: flex;
     gap: 20px;
+    align-items: center;
+    height: 40px;
 }
 
 .user-actions a {
     text-decoration: none;
     color: #000000;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    line-height: 40px;
+    display: flex;
+    align-items: center;
 }
 
 .user-actions a:hover {
@@ -94,19 +99,43 @@ body {
 }
 
 .current-time {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
+    display: flex;
+    flex-direction: column;
     border: 1px solid #e0e0e0;
-    padding: 5px 15px;
     border-radius: 8px;
-    width: 180px;
-    height: 68px;
+    width: 146px;
+    height: 90px;
 }
 
-.day-number {
-    font-size: 4.8rem;
-    color: #f0a500;
+.date-box {
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    height: 50px;
+}
+
+.time-divider-line {
+    height: 1px;
+    background-color: #e0e0e0;
+    margin: 0;
+}
+
+.time-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 1.5rem;
+    color: #3D3D3D;
+    font-weight: bold;
+    width: 50%;
+    margin: 0 auto;
+    padding-top: 0;
+    margin-top: -8px;
+}
+
+.time-separator {
+    margin: 0 2px;
 }
 
 .date-info {
@@ -116,6 +145,7 @@ body {
     padding-left: 10px;
     align-items: center;
     text-align: center;
+    gap: 0;
 }
 
 .date-info::before {
@@ -129,15 +159,26 @@ body {
 }
 
 .month {
-    font-size: 1.6rem;
+    font-size: 0.8rem;
     color: #3D3D3D;
     line-height: 1.2;
+    font-weight: bold;
+}
+
+.month::before {
+    content: attr(data-month);
+    font-size: 1.1rem;
+}
+
+.month::after {
+    content: none;
 }
 
 .year, .weekday {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     color: #3D3D3D;
     line-height: 1;
+    font-weight: bold;
 }
 
 .category-nav {
@@ -147,7 +188,11 @@ body {
     padding: 0.5rem 0;
     margin-bottom: 0 !important;
     border-top: 3px solid #FDD108;
-    border-bottom: 1.5px solid #D8D8D8;
+    position: relative;
+}
+
+.category-nav::after {
+    display: none;
 }
 
 .category-links {
@@ -183,7 +228,7 @@ body {
 .news-list {
     position: relative;
     overflow: visible;
-    margin-top: -1px !important;
+    margin-top: 10px !important;
     padding-top: 0;
 }
 
@@ -274,14 +319,39 @@ body {
 }
 
 .logo {
+    height: 40px;
     display: flex;
     align-items: center;
 }
 
-.logo-image {
-    height: 40px;
+.logo a {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.logo img {
+    height: 100%;
     width: auto;
-    object-fit: contain;
+    display: block;
+}
+
+/* 默认显示亮色logo */
+.logo .logo-dark {
+    display: none;
+}
+
+.logo .logo-light {
+    display: block !important;
+}
+
+/* 暗色模式下切换logo */
+[data-theme="dark"] .logo .logo-dark {
+    display: block !important;
+}
+
+[data-theme="dark"] .logo .logo-light {
+    display: none !important;
 }
 
 .main-container {
@@ -335,7 +405,7 @@ body {
 
 /* 添加分享按钮样式 */
 .share-btn-container {
-    margin-left: 20px;
+    margin-left: 10px;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
@@ -345,97 +415,183 @@ body {
 }
 
 .share-icon {
-    width: 16px;
-    height: 16px;
-    margin-right: 20px;
+    width: 20px !important;
+    height: 20px !important;
     cursor: pointer;
-    color: #333;
+    color: #666;
+    position: absolute;
+    right: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.news-item:hover .share-icon {
+    opacity: 1;
 }
 
 .share-icon:hover {
-    color: #666;
+    color: #2d5c9e;
+}
+
+/* 暗黑模式下的分享按钮 */
+[data-theme="dark"] .share-icon {
+    color: #999;
+}
+
+[data-theme="dark"] .share-icon:hover {
+    color: #4b8cdc;
 }
 
 /* 分享弹窗样式 */
 .share-modal {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    background: rgba(0, 0, 0, 0.6);
     z-index: 1000;
+    backdrop-filter: blur(4px);
 }
 
 .share-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 300px;
-    text-align: center;
-}
-
-.share-options {
-    display: flex;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px 0;
-}
-
-.share-btn {
-    all: unset;
-    cursor: pointer;
     position: absolute;
-    right: -200px;
     top: 50%;
-    transform: translateY(-50%);
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    border-radius: 12px;
+    padding: 24px;
+    width: 90%;
+    max-width: 420px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
 }
 
-.share-btn:hover {
-    background: #f5f5f5;
+.share-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
 }
 
-.share-btn.weixin {
-    background: #07c160;
-    color: white;
-}
-
-.share-btn.weixin:hover {
-    background: #06ae56;
-}
-
-.share-btn.weibo {
-    background: #e6162d;
-    color: white;
-}
-
-.share-btn.weibo:hover {
-    background: #d41528;
-}
-
-.share-btn.link {
-    background: #2d5c9e;
-    color: white;
-}
-
-.share-btn.link:hover {
-    background: #254b82;
+.share-header h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: #333;
 }
 
 .close-btn {
-    padding: 8px 20px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background: white;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #999;
+    cursor: pointer;
+    padding: 0;
+    line-height: 1;
+}
+
+.share-preview {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 24px;
+}
+
+.preview-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    object-fit: contain;
+    margin-bottom: 12px;
+    background-color: #fff;
+    padding: 8px;
+}
+
+.preview-text h4 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.preview-text p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.5;
+}
+
+.share-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.share-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #f8f8f8;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.close-btn:hover {
-    background: #f5f5f5;
+.share-btn:hover {
+    background: #f0f0f0;
+}
+
+.share-btn img {
+    width: 32px;
+    height: 32px;
+}
+
+.share-btn span {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .share-content {
+    background: #1a1a1a;
+}
+
+[data-theme="dark"] .share-header h3 {
+    color: #fff;
+}
+
+[data-theme="dark"] .close-btn {
+    color: #666;
+}
+
+[data-theme="dark"] .share-preview {
+    background: #2a2a2a;
+}
+
+[data-theme="dark"] .preview-text h4 {
+    color: #fff;
+}
+
+[data-theme="dark"] .preview-text p {
+    color: #bbb;
+}
+
+[data-theme="dark"] .share-btn {
+    background: #2a2a2a;
+}
+
+[data-theme="dark"] .share-btn:hover {
+    background: #333;
+}
+
+[data-theme="dark"] .share-btn span {
+    color: #fff;
 }
 
 /* 新闻加载动画 */
@@ -459,7 +615,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* 新闻切换动画 */
+/* 新切换动画 */
 .news-item {
     opacity: 1;
     transition: opacity 0.3s ease;
@@ -505,7 +661,7 @@ body {
     cursor: pointer;
 }
 
-/* 添加个通用容器来控制整体度 */
+/* 添加个通用容器控制整体度 */
 .container {
     max-width: 1200px;
     margin: 0 auto;
@@ -514,7 +670,7 @@ body {
     overflow: hidden;
 }
 
-/* 添加响应式布局持 */
+/* 添加响应布局持 */
 @media (max-width: 1200px) {
     .category-nav {
         overflow-x: auto;
@@ -549,7 +705,7 @@ body {
     width: calc(100% - 30px);
 }
 
-/* 新闻内区域 */
+/* 新闻内容区域 */
 .news-content {
     flex: 1;
     margin: 0;
@@ -560,7 +716,46 @@ body {
     margin-right: 60px;
 }
 
-/* 分类和标题容器 */
+/* 新闻标题和分类容器 */
+.news-header {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin-bottom: 8px;
+}
+
+/* 新闻标题 */
+.news-title {
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 1.5;
+    order: 1;
+}
+
+/* 类标签 */
+.news-category {
+    color: #666;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    order: 2;
+}
+
+/* 新闻细内容 */
+.news-detail {
+    color: #666;
+    line-height: 1.6;
+    margin-top: 4px;
+}
+
+/* 新闻时间 */
+.news-time {
+    color: #666;
+    font-size: 0.85rem;
+    min-width: 45px;
+    margin-right: 10px;
+}
+
+/* 分类和标容器 */
 .news-header {
     display: flex;
     align-items: baseline;
@@ -590,7 +785,7 @@ body {
     margin-left: 4px;
 }
 
-/* 新闻详细内容样式 */
+/* 新闻详内容样式 */
 .news-detail {
     color: #666;
     line-height: 1.5;
@@ -606,7 +801,7 @@ body {
     padding: 0;
 }
 
-/* 段落之间的间距 */
+/* 段落间的间距 */
 .news-detail p + p {
     margin-top: 0.3rem;
 }
@@ -621,10 +816,10 @@ body {
     transform: translateY(-50%);
 }
 
-/* 分享图标样式 */
+/* 分享图标样 */
 .share-icon {
-    width: 16px;
-    height: 16px;
+    width: 10px;
+    height: 10px;
     display: block;
 }
 
@@ -647,12 +842,12 @@ body {
     padding: 5px 5px;
     border-radius: 8px;
     width: 180px;
-    height: 68px;
+    height: 95px;
 }
 
 /* 左侧大数字 */
 .day-number {
-    font-size: 4.8rem;
+    font-size: 4rem;
     color: #f0a500;
     line-height: 1;
 }
@@ -679,16 +874,17 @@ body {
     background-color: #e0e0e0;
 }
 
-/* 月份 */
+/* 月 */
 .month {
-    font-size: 1.6rem;
+    font-size: 0.8rem;
     color: #3D3D3D;
     line-height: 1.2;
+    font-weight: bold;
 }
 
 /* 年份 */
 .year {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     color: #3D3D3D;
     line-height: 1;
     font-weight: bold;
@@ -696,7 +892,7 @@ body {
 
 /* 星期 */
 .weekday {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
     color: #3D3D3D;
     line-height: 1;
     font-weight: bold;
@@ -724,7 +920,7 @@ body {
     letter-spacing: -1px;
 }
 
-/* 刷新文容器 */
+/* 刷文容器 */
 .refresh-text {
     display: inline-flex;
     align-items: center;
@@ -736,14 +932,14 @@ body {
     margin-left: -1px;
 }
 
-/* 新闻内容整体容器 */
+/* 新闻内整体容器 */
 .news-section {
     position: relative;
     top: 0;
     margin-top: 2rem;
 }
 
-/* 分类导航和顶部边框线 */
+/* 导和顶 */
 .category-nav {
     border-top: 3px solid #013353;
     padding-top: 0.2rem;
@@ -754,7 +950,7 @@ body {
     align-items: center;
 }
 
-/* 新闻列表容器 */
+/* 表容 */
 .news-list {
     margin-top: 0;
     padding-top: 0;
@@ -762,9 +958,9 @@ body {
     overflow: visible;
 }
 
-/* 主要内容区域 */
+/* 主内容区域 */
 .main-content {
-    padding-top: 2rem; /* 与顶部线保持距离 */
+    padding-top: 2rem; /* 顶部持距离 */
 }
 
 /* 标题和时间区域 */
@@ -797,7 +993,7 @@ body {
     padding: 0 20px;
 }
 
-/* 标和时间区域包装器 */
+/* 标和时区域包装器 */
 .header-wrapper {
     display: flex;
     justify-content: space-between;
@@ -811,6 +1007,40 @@ body {
 .logo img {
     height: 40px;
     width: auto;
+    max-width: 100%;
+    display: block;
+}
+
+.logo-dark {
+    display: none;
+}
+
+.logo-light {
+    display: block;
+}
+
+/* 暗黑模式下的Logo切换 */
+[data-theme="dark"] .logo-light {
+    display: none;
+}
+
+[data-theme="dark"] .logo-dark {
+    display: block;
+}
+
+/* 暗黑模式下的Logo样式 */
+[data-theme="dark"] .logo svg path.cls-3,
+[data-theme="dark"] .logo svg path.cls-5 {
+    fill: #4b8cdc;  /* 将蓝色部变得更亮 */
+}
+
+[data-theme="dark"] .logo svg path.cls-4 {
+    fill: #FDD108;  /* 保持黄色不变 */
+}
+
+[data-theme="dark"] .logo svg text.cls-1,
+[data-theme="dark"] .logo svg text.cls-2 {
+    fill: #fff;  /* 文字变为白色 */
 }
 
 /* 标区域 */
@@ -819,7 +1049,7 @@ body {
     flex-direction: column;
 }
 
-/* 标题样式 */
+/* 标样式 */
 .title-section h1 {
     font-size: 3.2rem;
     margin: 0;
@@ -833,13 +1063,13 @@ body {
     color: #A09F9D;
     font-weight: 300;
     line-height: 1;
-    margin-top: 0.6rem; /* 减小与主标的间距 */
+    margin-top: 0.6rem; /* 减小主标的间距 */
     position: relative;
     z-index: 1;
     letter-spacing: 0.2em;
 }
 
-/* 标题组合样式 */
+/* 标题组式 */
 .title-group {
     display: flex;
     flex-direction: column;
@@ -847,7 +1077,7 @@ body {
     padding-top: 0.5rem;
 }
 
-/* 标题样式 */
+/* 题样式 */
 .title-section h1 {
     font-size: 3.2rem;
     margin: 0;
@@ -855,7 +1085,7 @@ body {
     line-height: 1;
 }
 
-/* 副标题样式 */
+/* 副标题式 */
 .subtitle {
     font-size: 1rem;
     color: #A09F9D;
@@ -880,7 +1110,7 @@ body {
     margin-bottom: 0.5rem;
 }
 
-/* 新闻详细容样式 */
+/* 闻详细容样式 */
 .news-detail {
     color: #666;
     line-height: 1.5;
@@ -892,7 +1122,7 @@ body {
     color: #666;
 }
 
-/* 分类和标题容器 */
+/* 分类和标题容 */
 .news-header {
     display: flex;
     align-items: baseline;
@@ -915,7 +1145,7 @@ body {
     margin-left: 4px;
 }
 
-/* 新闻标题样式 */
+/* 新闻标题式 */
 .news-title {
     font-weight: bold;
     font-size: 1rem;
@@ -936,7 +1166,7 @@ body {
     padding-left: 0;
 }
 
-/* 闻容区域 */
+/* 容区域 */
 .news-content {
     flex: 1;
     margin-left: 0;
@@ -946,10 +1176,10 @@ body {
 /* 新闻内容包装式 */
 .news-content-wrapper {
     position: relative;
-    margin-top: 0;
+    margin-top: 10px;
 }
 
-/* 分类导航 */
+/* 分类航 */
 .category-nav {
     display: flex;
     justify-content: space-between;
@@ -960,10 +1190,10 @@ body {
     border-bottom: 1.5px solid #D8D8D8;
 }
 
-/* 新闻列表 */
+/* 新闻列 */
 .news-list {
     position: relative;
-    margin-top: -1px !important;
+    margin-top: 10px !important;
     padding-top: 0;
 }
 
@@ -972,187 +1202,7 @@ body {
     display: none;
 }
 
-/* 时间轴竖线 */
-.news-list::before {
-    content: '';
-    position: absolute;
-    left: 30px;
-    top: 0;
-    bottom: 0;
-    width: 1.5px;
-    background-color: #e0e0e0;
-}
-
-/* 响应式设计 */
-/* 大屏幕设备 (>=1200px) */
-@media (min-width: 1200px) {
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-}
-
-/* 平板和小屏电脑 (>=768px && <1200px) */
-@media (min-width: 768px) and (max-width: 1199px) {
-    .container {
-        padding: 0 20px;
-    }
-    
-    .title-section h1 {
-        font-size: 2.8rem;
-    }
-    
-    .news-item {
-        padding: 8px 0 8px 30px;
-    }
-}
-
-/* 手机设备 (<768px) */
-@media screen and (max-width: 767px) {
-    .title-section {
-        width: 100%;
-    }
-    
-    .title-section h1 {
-        font-size: 4vw !important; /* 使用视窗宽度单位 */
-    }
-    
-    .title-section h1 * {
-        font-size: 4vw !important; /* 强制所有子元素使用相同大小 */
-    }
-    
-    .subtitle {
-        font-size: 0.7rem;
-        letter-spacing: 0.1em;
-        white-space: nowrap;
-    }
-}
-
-/* 小手机设备 (<375px) */
-@media screen and (max-width: 374px) {
-    .title-section h1,
-    .title-section h1 * {
-        font-size: 3.5vw !important; /* 更小屏幕使用更的比例 */
-    }
-    
-    .subtitle {
-        font-size: 0.6rem;
-    }
-}
-
-/* 分类导航基础式 */
-.category-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    padding: 0.5rem 0;
-    margin-bottom: 0 !important;
-    border-top: 3px solid #FDD108;
-    border-bottom: 1.5px solid #D8D8D8;
-}
-
-.category-links {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    white-space: nowrap;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    width: 70%;
-    padding-left: 2rem;
-}
-
-/* 手机设备 (<768px) */
-@media screen and (max-width: 767px) {
-    .category-nav {
-        padding: 0;
-        gap: 5px;
-    }
-    
-    .category-links {
-        gap: 2px; /* 减小间距 */
-        padding-bottom: 0;
-    }
-    
-    .category-links a {
-        font-size: 2.8vw; /* 减体 */
-        padding: 0.2rem 0.4rem; /* 减小内边距 */
-        white-space: nowrap;
-        flex-shrink: 0;
-    }
-    
-    /* 右侧过滤器 */
-    .news-filter {
-        font-size: 2.6vw;
-        white-space: nowrap;
-        flex-shrink: 0;
-        display: flex;
-        gap: 5px;
-    }
-    
-    .news-filter label {
-        white-space: nowrap;
-        display: flex;
-        align-items: center;
-        gap: 2px;
-    }
-}
-
-/* 小手机设备 (<375px) */
-@media screen and (max-width: 374px) {
-    .category-links a {
-        font-size: 2.6vw;
-        padding: 0.15rem 0.3rem;
-    }
-    
-    .news-filter {
-        font-size: 2.4vw;
-    }
-}
-
-/* 超小屏幕 (<320px) */
-@media screen and (max-width: 320px) {
-    .category-links a {
-        font-size: 2.4vw;
-        padding: 0.1rem 0.25rem;
-    }
-    
-    .news-filter {
-        font-size: 2.2vw;
-    }
-}
-
-/* 新闻内容包装器 */
-.news-content-wrapper {
-    position: relative;
-    margin-top: 0;
-}
-
-/* 分类导航 */
-.category-nav {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0.5rem 0;
-    margin-bottom: 0 !important;
-    border-top: 3px solid #FDD108;
-    border-bottom: 1.5px solid #D8D8D8;
-}
-
-/* 新闻列表 */
-.news-list {
-    position: relative;
-    margin-top: -1px !important;
-    padding-top: 0;
-}
-
-/* 移除新闻列表上方横线 */
-.news-list::after {
-    display: none;
-}
-
-/* 时间轴竖线 */
+/* 时轴竖线 */
 .news-list::before {
     content: '';
     position: absolute;
@@ -1178,7 +1228,7 @@ body {
     transition: all 0.3s ease;
 }
 
-/* 悬停时的小圆点样式 */
+/* 悬停时小圆点样式 */
 .news-item:hover::before {
     background: #f0a500;
     transform: translate(-50%, -50%) scale(1.2);
@@ -1197,7 +1247,7 @@ body {
     transition: background-color 0.3s ease;
 }
 
-/* 移动端适配 */
+/* 动端适配 */
 @media screen and (max-width: 767px) {
     /* 容器宽度调整 */
     .container {
@@ -1205,7 +1255,7 @@ body {
         overflow-x: hidden;
     }
 
-    /* 标题样式调整 */
+    /* 标样式调整 */
     .title-section h1 {
         font-size: 24px !important;
         white-space: normal;
@@ -1213,7 +1263,7 @@ body {
         line-height: 1.3;
     }
 
-    /* 时间显示区域调整 */
+    /* 时间显示域调整 */
     .current-time {
         width: 140px;
         height: 50px;
@@ -1234,15 +1284,23 @@ body {
 
     /* 分类导航调整 */
     .category-nav {
-        flex-direction: column;
+        flex-direction: row;
         gap: 10px;
+        flex-wrap: wrap;
     }
 
     .category-links {
-        width: 100%;
-        padding-left: 0;
+        width: auto;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        display: flex;
+        padding-bottom: 5px;
+        margin-right: 10px;
+        flex: 1;
+    }
+
+    .category-links::-webkit-scrollbar {
+        display: none;
     }
 
     .category-links a {
@@ -1251,10 +1309,26 @@ body {
     }
 
     .news-filter {
-        width: 100%;
-        justify-content: flex-end;
+        width: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        white-space: nowrap;
         font-size: 12px;
-        gap: 1rem;
+    }
+
+    /* 勾选项容器样式 */
+    .news-filter label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+    }
+
+    /* 调整勾选框大小 */
+    .news-filter input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
     }
 
     /* 新闻列表调整 */
@@ -1288,32 +1362,20 @@ body {
         font-size: 12px;
     }
 
-    /* 分享按钮调整 */
-    .share-btn {
-        right: 10px;
+    /* 分享卡片 */
+    .share-card {
+        width: 90%;
+        max-width: none;
     }
 
-    .share-icon {
-        width: 14px;
-        height: 14px;
+    .share-preview {
+        flex-direction: column;
     }
 
-    /* Logo调整 */
-    .logo img {
-        height: 30px;
-    }
-
-    /* 顶部导航调整 */
-    .top-nav {
-        padding: 0 10px;
-    }
-
-    .user-actions {
-        gap: 10px;
-    }
-
-    .user-actions a {
-        font-size: 12px;
+    .preview-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
     }
 }
 
@@ -1326,6 +1388,1150 @@ body {
     .category-links a {
         font-size: 12px;
         padding: 0.2rem 0.6rem;
+    }
+}
+
+/* 暗黑模式切换按钮式 */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.dark-mode-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode-toggle svg {
+    width: 20px;
+    height: 20px;
+}
+
+.dark-mode-toggle .moon-icon {
+    display: none;
+}
+
+/* 暗黑模式样式 */
+[data-theme="dark"] {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .dark-mode-toggle {
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .dark-mode-toggle .sun-icon {
+    display: none;
+}
+
+[data-theme="dark"] .dark-mode-toggle .moon-icon {
+    display: block;
+}
+
+/* 点击动效果 */
+.dark-mode-toggle.clicked {
+    transform: scale(0.9);
+}
+
+/* 主题切过渡效果 */
+.theme-transition * {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease !important;
+}
+
+/* 暗黑模式切换按钮画 */
+.dark-mode-toggle {
+    transition: transform 0.2s ease;
+}
+
+.dark-mode-toggle.clicked {
+    transform: scale(0.9);
+}
+
+.dark-mode-toggle:active {
+    transform: scale(0.9);
+}
+
+/* 图标过渡效果 */
+.dark-mode-toggle svg {
+    transition: all 0.3s ease;
+}
+
+/* 暗黑模式样式 */
+[data-theme="dark"] {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .top-nav {
+    background-color: #1a1a1a;
+    border-bottom-color: #333;
+}
+
+[data-theme="dark"] .user-actions a {
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .news-item {
+    border-bottom-color: #333;
+}
+
+[data-theme="dark"] .news-content {
+    color: #e0e0e0;
+}
+
+[data-theme="dark"] .news-detail {
+    color: #999;
+}
+
+[data-theme="dark"] .category-nav {
+    background-color: #1a1a1a;
+    border-color: #333;
+}
+
+[data-theme="dark"] .category-links a {
+    color: #999;
+}
+
+[data-theme="dark"] .category-links a.active {
+    background: #2d5c9e;
+    color: #fff;
+}
+
+[data-theme="dark"] .news-filter {
+    color: #999;
+}
+
+[data-theme="dark"] .news-list::before {
+    background-color: #333;
+}
+
+[data-theme="dark"] .current-time {
+    background-color: #1a1a1a;
+    border-color: #333;
+}
+
+[data-theme="dark"] .date-info::before {
+    background-color: #333;
+}
+
+[data-theme="dark"] .month,
+[data-theme="dark"] .year,
+[data-theme="dark"] .weekday {
+    color: #e0e0e0;
+}
+
+/* 主题切换按钮样式 */
+.dark-mode-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+/* 主题切换渡动画 */
+body {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 暗黑模式下的标题样式 */
+[data-theme="dark"] .title-section h1 {
+    color: #fff;  /* 标题文变白色 */
+}
+
+[data-theme="dark"] .title-section h1 .blue {
+    color: #4b8cdc;  /* 蓝色部分得更亮 */
+}
+
+[data-theme="dark"] .title-section h1 .black {
+    color: #fff;  /* 黑色部分变白色 */
+}
+
+[data-theme="dark"] .subtitle {
+    color: #bbb;  /* 副标题颜色变浅 */
+}
+
+[data-theme="dark"] .day-number {
+    color: #ffc107;  /* 日期数字变得更亮 */
+}
+
+[data-theme="dark"] .month,
+[data-theme="dark"] .year,
+[data-theme="dark"] .weekday {
+    color: #fff;  /* 日期文字变白 */
+}
+
+/* 分类导航样式 */
+.category-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 0;
+    margin-bottom: 0 !important;
+    border-top: 3px solid #FDD108;  /* 黄色边框 */
+    position: relative; /* 添加相对定位 */
+}
+
+/* 移除中间横线 */
+.category-nav::after {
+    display: none;  /* 隐藏中间横线 */
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .category-nav {
+    background-color: #1a1a1a;
+}
+
+/* 登录页面样式 */
+.login-container {
+    max-width: 400px;
+    margin: 60px auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #2d5c9e;
+    outline: none;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9rem;
+}
+
+.form-options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.forgot-password {
+    color: #2d5c9e;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.login-btn {
+    background: #2d5c9e;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 100%;  /* 确保按钮占宽度 */
+    margin-top: 20px;  /* 增加上边距 */
+}
+
+.login-btn:hover {
+    background: #254b82;
+}
+
+.register-link {
+    text-align: center;
+    font-size: 0.9rem;
+    margin-top: 20px;
+}
+
+.register-link a {
+    color: #2d5c9e;
+    text-decoration: none;
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+/* 暗黑模式下的登录页面样式 */
+[data-theme="dark"] .login-container {
+    background: #1a1a1a;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .login-container h2 {
+    color: #fff;
+}
+
+[data-theme="dark"] .form-group label {
+    color: #bbb;
+}
+
+[data-theme="dark"] .form-group input {
+    background: #333;
+    border-color: #444;
+    color: #fff;
+}
+
+[data-theme="dark"] .form-group input:focus {
+    border-color: #4b8cdc;
+}
+
+[data-theme="dark"] .form-options {
+    color: #bbb;
+}
+
+[data-theme="dark"] .forgot-password {
+    color: #4b8cdc;
+}
+
+[data-theme="dark"] .register-link {
+    color: #bbb;
+}
+
+[data-theme="dark"] .register-link a {
+    color: #4b8cdc;
+}
+
+/* 暗黑模式下的登录/注册页面样式 */
+[data-theme="dark"] .login-container {
+    background: #1a1a1a;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .login-container h2 {
+    color: #fff;
+}
+
+[data-theme="dark"] .form-group label {
+    color: #bbb;
+}
+
+[data-theme="dark"] .form-group input {
+    background: #333;
+    border-color: #444;
+    color: #fff;
+}
+
+[data-theme="dark"] .form-group input:focus {
+    border-color: #4b8cdc;
+}
+
+[data-theme="dark"] .form-options {
+    color: #bbb;
+}
+
+[data-theme="dark"] .forgot-password {
+    color: #4b8cdc;
+}
+
+[data-theme="dark"] .register-link {
+    color: #bbb;
+}
+
+[data-theme="dark"] .register-link a {
+    color: #4b8cdc;
+}
+
+[data-theme="dark"] .login-btn {
+    background: #2d5c9e;
+    color: #fff;
+}
+
+[data-theme="dark"] .login-btn:hover {
+    background: #254b82;
+}
+
+/* 激活状态导航链接 */
+[data-theme="dark"] .user-actions a.active {
+    color: #4b8cdc;
+}
+
+/* 手机号码验证相关样式 */
+.phone-input {
+    display: flex;
+    gap: 10px;
+}
+
+.phone-input input {
+    flex: 1;
+}
+
+.send-code-btn {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 90px;
+    height: calc(100% - 2px);
+    background: #2d5c9e;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+/* 验证码输入框容器 */
+.verify-input {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.verify-input input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 95px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+/* 验证码按钮悬停效果 */
+.send-code-btn:hover {
+    background: #254b82;
+}
+
+/* 验证码按钮禁用状态 */
+.send-code-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .send-code-btn {
+    background: #4b8cdc;
+}
+
+[data-theme="dark"] .send-code-btn:hover {
+    background: #3a7ac7;
+}
+
+[data-theme="dark"] .send-code-btn:disabled {
+    background: #444;
+}
+
+.divider {
+    text-align: center;
+    margin: 15px 0;
+    position: relative;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 50px);
+    height: 1px;
+    background-color: #ddd;
+}
+
+.divider::before {
+    left: 0;
+}
+
+.divider::after {
+    right: 0;
+}
+
+.divider span {
+    background: #fff;
+    padding: 0 10px;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* 暗黑模式下的样式 */
+[data-theme="dark"] .send-code-btn {
+    background: #4b8cdc;
+}
+
+[data-theme="dark"] .send-code-btn:hover {
+    background: #3a7ac7;
+}
+
+[data-theme="dark"] .divider span {
+    background: #1a1a1a;
+    color: #bbb;
+}
+
+[data-theme="dark"] .divider::before,
+[data-theme="dark"] .divider::after {
+    background-color: #444;
+}
+
+/* 输入框和选择器组合 */
+.input-with-select {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-with-select input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 75px;  /* 为选器预留空间 */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+/* 账号类型选择器样式 */
+.account-type-select {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 90px;
+    height: calc(100% - 2px);
+    border: none;
+    border-left: 1px solid #ddd;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.7rem;
+    letter-spacing: -0.5px;
+    color: #666;
+    background-color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 0 4px;
+    z-index: 1;
+}
+
+/* 验证码按钮样式 */
+.send-code-btn {
+    position: absolute;
+    right: 1px;
+    top: 1px;
+    width: 90px;
+    height: calc(100% - 2px);
+    background: #2d5c9e;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    line-height: 1;
+}
+
+/* 输入框右侧内边距调整 */
+.input-with-select input,
+.verify-input input {
+    width: 100%;
+    padding: 10px;
+    padding-right: 95px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+/* 分享选项网格布局 */
+.share-options {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.share-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* 整图标容器大小 */
+.share-icon-wrapper {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border-radius: 8px;
+}
+
+/* 调整图标大小 */
+.share-icon-wrapper img {
+    width: 20px;
+    height: 20px;
+}
+
+/* 调整文字大小 */
+.share-name {
+    font-size: 0.8rem;
+    color: #666;
+    white-space: nowrap;
+}
+
+/* 基础响应式设置 */
+:root {
+    --max-width: 1200px;
+    --mobile-padding: 20px;
+    --tablet-padding: 40px;
+}
+
+/* 基础容器样式 */
+.container {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--mobile-padding);
+    width: 100%;
+}
+
+/* 平板设备 (768px 及以上) */
+@media screen and (min-width: 768px) {
+    .container {
+        padding: 0 var(--tablet-padding);
+    }
+
+    /* 登录/注册容器 */
+    .login-container {
+        max-width: 500px;
+        padding: 40px;
+    }
+}
+
+/* 手机设备 (768px 以下) */
+@media screen and (max-width: 767px) {
+    /* 顶部导航 */
+    .top-nav {
+        padding: 10px var(--mobile-padding);
+    }
+
+    .logo img {
+        height: 30px;
+    }
+
+    /* 标题区域 */
+    .title-section h1 {
+        font-size: 2rem !important;
+    }
+
+    .subtitle {
+        font-size: 0.9rem;
+    }
+
+    /* 时间显示 */
+    .current-time {
+        width: 120px;
+        height: 80px;
+    }
+
+    .day-number {
+        font-size: 2.5rem;
+    }
+
+    /* 分类导航 */
+    .category-nav {
+        flex-direction: row;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
+
+    .category-links {
+        width: auto;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        display: flex;
+        padding-bottom: 5px;
+        margin-right: 10px;
+        flex: 1;
+    }
+
+    .category-links::-webkit-scrollbar {
+        display: none;
+    }
+
+    .category-links a {
+        font-size: 0.9rem;
+        white-space: nowrap;
+    }
+
+    .news-filter {
+        width: auto;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        white-space: nowrap;
+        font-size: 12px;
+    }
+
+    /* 勾选项容器样式 */
+    .news-filter label {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        white-space: nowrap;
+    }
+
+    /* 调整勾选框大小 */
+    .news-filter input[type="checkbox"] {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* 新闻列表 */
+    .news-item {
+        margin-left: 20px;
+        padding: 10px 0 8px 10px;
+    }
+
+    .news-list::before {
+        left: 20px;
+    }
+
+    .news-item::before {
+        left: 0;
+    }
+
+    .news-time {
+        font-size: 12px;
+        min-width: 45px;
+    }
+
+    .news-title {
+        font-size: 14px;
+    }
+
+    .news-category {
+        font-size: 12px;
+    }
+
+    .news-detail {
+        font-size: 12px;
+    }
+
+    /* 分享卡片 */
+    .share-card {
+        width: 90%;
+        max-width: none;
+    }
+
+    .share-preview {
+        flex-direction: column;
+    }
+
+    .preview-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+}
+
+/* 小型手机设备 (375px 以下) */
+@media screen and (max-width: 375px) {
+    .title-section h1 {
+        font-size: 1.8rem !important;
+    }
+
+    .current-time {
+        width: 100px;
+        height: 70px;
+    }
+
+    .day-number {
+        font-size: 2rem;
+    }
+
+    .category-links a {
+        padding: 0.2rem 0.6rem;
+    }
+}
+
+/* 登录/注册页面响应式 */
+@media screen and (max-width: 767px) {
+    /* 登录/注册容器 */
+    .login-container {
+        width: calc(100% - 40px); /* 左右各留20px边距 */
+        margin: 20px auto;
+        padding: 20px;
+        max-width: none; /* 移除最大宽度限制 */
+    }
+
+    /* 输入框和选择器组合 */
+    .input-with-select {
+        width: 100%;
+    }
+
+    .input-with-select input {
+        width: 100%;
+    }
+
+    /* 验证码输入框组合 */
+    .verify-input {
+        width: 100%;
+    }
+
+    .verify-input input {
+        width: 100%;
+    }
+}
+
+/* 超小屏幕适配 (375px 以下) */
+@media screen and (max-width: 375px) {
+    .login-container {
+        width: calc(100% - 30px); /* 左右各留15px边距 */
+        padding: 15px;
+    }
+}
+
+/* 暗黑模式适配 */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
+}
+
+/* 打印样式 */
+@media print {
+    .share-card,
+    .share-icon,
+    .category-nav,
+    .news-filter {
+        display: none !important;
+    }
+}
+
+/* 右侧期信息 */
+.date-right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;  /* 水平居中 */
+    justify-content: flex-start;  /* 改为顶部对齐 */
+    width: 50%;
+    padding: 4px 0 4px 10px;  /* 减小左内边距 */
+    height: 100%;  /* 保持高度 */
+    padding-top: 2px;  /* 减小顶部内边距 */
+    margin-top: -24px;  /* 保持文字上移 */
+    border-left: none;  /* 删除竖线 */
+}
+
+/* 月份、年份、星期 */
+.month, .year, .weekday {
+    font-size: 0.8rem;
+    color: #3D3D3D;
+    line-height: 1.2;  /* 保持行高 */
+    font-weight: bold;
+    text-align: center;  /* 保持文字居中 */
+    width: 100%;  /* 保持宽度 */
+    margin: 0;  /* 保持外边距 */
+    white-space: nowrap;  /* 防止文字换行 */
+    letter-spacing: -0.5px;  /* 减小字间距 */
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .date-right {
+    border-left-color: #333;
+}
+
+[data-theme="dark"] .month,
+[data-theme="dark"] .year,
+[data-theme="dark"] .weekday {
+    color: #e0e0e0;
+}
+
+/* 时间显示区域 */
+.time-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    font-size: 1.5rem;
+    color: #3D3D3D;
+    font-weight: bold;
+    width: 80%;  /* 减小宽度，使其居中 */
+    margin: 0 auto;
+    padding-top: 0;
+    margin-top: -8px;
+}
+
+.time-separator {
+    margin: 0 1px;  /* 减小分隔符间距 */
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 767px) {
+    .current-time {
+        width: 140px;
+        height: 90px;
+        padding: 3px;
+    }
+
+    .day-number {
+        font-size: 2.8rem;
+        margin-left: 5px;
+    }
+
+    .date-right {
+        padding-left: 8px;
+        margin-top: -20px;
+    }
+
+    .time-box {
+        font-size: 1.3rem;
+        margin-top: -4px;
+        width: 70%;  /* 移动端下更窄 */
+    }
+
+    .time-separator {
+        margin: 0 1px;
+    }
+}
+
+/* 分享网格布局 */
+.share-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 16px;
+    background: #f8f8f8;  /* 添加背景色 */
+    border-radius: 8px;  /* 添加圆角 */
+    margin-top: 16px;
+    flex-wrap: nowrap; /* 防止换行 */
+}
+
+/* 分享项目样式 */
+.share-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 0; /* 允许内容收缩 */
+}
+
+/* 分享图标容器 */
+.share-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border-radius: 8px;
+    flex-shrink: 0; /* 防止图标被压缩 */
+}
+
+/* 分享图标 */
+.share-icon-wrapper img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain; /* 保持图标比例 */
+}
+
+/* 分享名称 */
+.share-name {
+    font-size: 0.8rem;
+    color: #666;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 767px) {
+    .share-card {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .share-card-content {
+        padding: 15px;
+    }
+
+    .share-grid {
+        padding: 12px;
+        gap: 6px;
+    }
+
+    .share-icon-wrapper {
+        width: 36px;
+        height: 36px;
+    }
+
+    .share-icon-wrapper img {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+/* 分享卡片样式 */
+.share-card {
+    display: none;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    z-index: 9999;
+    width: 400px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* 分享卡片内容区域 */
+.share-card-content {
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    max-height: 90vh; /* 最大高度为视窗高度的90% */
+    overflow-y: auto; /* 内容过多时可滚动 */
+}
+
+/* 分享预览区域 */
+.share-preview {
+    background: #f8f8f8;
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 20px;
+}
+
+/* 分享网格布局 */
+.share-grid {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 16px;
+    background: #f8f8f8;
+    border-radius: 8px;
+    margin-top: 16px;
+    flex-wrap: nowrap; /* 防止换行 */
+}
+
+/* 分享项目样式 */
+.share-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 4px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    min-width: 0; /* 允许内容收缩 */
+}
+
+/* 分享图标容器 */
+.share-icon-wrapper {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+    border-radius: 8px;
+    flex-shrink: 0; /* 防止图标被压缩 */
+}
+
+/* 分享图标 */
+.share-icon-wrapper img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain; /* 保持图标比例 */
+}
+
+/* 分享名称 */
+.share-name {
+    font-size: 0.8rem;
+    color: #666;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+}
+
+/* 移动端适配 */
+@media screen and (max-width: 767px) {
+    .share-card {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .share-card-content {
+        padding: 15px;
+    }
+
+    .share-grid {
+        padding: 12px;
+        gap: 6px;
+    }
+
+    .share-icon-wrapper {
+        width: 36px;
+        height: 36px;
+    }
+
+    .share-icon-wrapper img {
+        width: 20px;
+        height: 20px;
     }
 }
  

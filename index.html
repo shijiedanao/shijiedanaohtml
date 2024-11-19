@@ -10,10 +10,19 @@
     <div class="top-nav">
         <div class="logo">
             <a href="index.html">
-                <img src="./images/logo-03.svg" alt="世界大脑">
+                <img src="./images/logo-light.svg" alt="世界大脑" class="logo-light">
+                <img src="./images/logo-dark.svg" alt="世界大脑" class="logo-dark">
             </a>
         </div>
         <div class="user-actions">
+            <button id="darkModeToggle" class="dark-mode-toggle">
+                <svg class="sun-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37c-.39-.39-1.03-.39-1.41 0-.39.39-.39 1.03 0 1.41l1.06 1.06c.39.39 1.03.39 1.41 0 .39-.39.39-1.03 0-1.41l-1.06-1.06zm1.06-10.96c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36c.39-.39.39-1.03 0-1.41-.39-.39-1.03-.39-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/>
+                </svg>
+                <svg class="moon-icon" viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="currentColor" d="M9.37,5.51C9.19,6.15,9.1,6.82,9.1,7.5c0,4.08,3.32,7.4,7.4,7.4c0.68,0,1.35-0.09,1.99-0.27C17.45,17.19,14.93,19,12,19 c-3.86,0-7-3.14-7-7C5,9.07,6.81,6.55,9.37,5.51z M12,3c-4.97,0-9,4.03-9,9s4.03,9,9,9s9-4.03,9-9c0-0.46-0.04-0.92-0.1-1.36 c-0.98,1.37-2.58,2.26-4.4,2.26c-2.98,0-5.4-2.42-5.4-5.4c0-1.81,0.89-3.42,2.26-4.4C12.92,3.04,12.46,3,12,3L12,3z"/>
+                </svg>
+            </button>
             <a href="login.html" class="login">登录</a>
             <a href="register.html" class="register">注册</a>
         </div>
@@ -33,11 +42,22 @@
             </div>
 
             <div class="current-time">
-                <span class="day-number">18</span>
-                <div class="date-info">
-                    <span class="month">11</span>
-                    <span class="year">2024</span>
-                    <span class="weekday">星期一</span>
+                <div class="date-box">
+                    <div class="date-left">
+                        <span class="day-number">19</span>
+                    </div>
+                    <div class="date-right">
+                        <span class="month">11</span>
+                        <span class="year">2024</span>
+                        <span class="weekday">星期一</span>
+                    </div>
+                </div>
+                <div class="time-box">
+                    <span class="hour">21</span>
+                    <span class="time-separator">:</span>
+                    <span class="minute">15</span>
+                    <span class="time-separator">:</span>
+                    <span class="second">30</span>
                 </div>
             </div>
         </div>
@@ -68,9 +88,62 @@
                 <!-- 运行 NewsGenerator 生成的200条新闻数据将替换这里 -->
                 {{ 正在运行程序生成数据... }}
             </div>
+            <div class="share-card">
+                <div class="share-card-content">
+                    <div class="share-preview">
+                        <img src="images/preview.png" alt="分享预览图" class="preview-image">
+                        <div class="preview-text">
+                            <h4 id="shareTitle">新闻标题</h4>
+                            <p id="shareDescription">新闻内容预览...</p>
+                        </div>
+                    </div>
+                    <div class="share-grid">
+                        <div class="share-item">
+                            <div class="share-icon-wrapper">
+                                <img src="./images/wechat.svg" alt="微信">
+                            </div>
+                            <span class="share-name">微信</span>
+                        </div>
+                        <div class="share-item">
+                            <div class="share-icon-wrapper">
+                                <img src="./images/douyin.svg" alt="抖音">
+                            </div>
+                            <span class="share-name">抖音</span>
+                        </div>
+                        <div class="share-item">
+                            <div class="share-icon-wrapper">
+                                <img src="./images/link.svg" alt="复制链接">
+                            </div>
+                            <span class="share-name">复制链接</span>
+                        </div>
+                        <div class="share-item">
+                            <div class="share-icon-wrapper">
+                                <img src="./images/save.svg" alt="保存图片">
+                            </div>
+                            <span class="share-name">保存图片</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加分享模态框 -->
+        <div id="shareModal" class="share-modal" style="display: none;">
+            <div class="share-content">
+                <h3>分享到</h3>
+                <div class="share-options">
+                    <button class="share-btn weixin">微信</button>
+                    <button class="share-btn weibo">微博</button>
+                    <button class="share-btn link">复制链接</button>
+                </div>
+                <button class="close-btn">关闭</button>
+            </div>
         </div>
     </div>
 
     <script src="main.js"></script>
+    <audio id="notificationSound">
+        <source src="notification.mp3" type="audio/mpeg">
+    </audio>
 </body>
 </html> 

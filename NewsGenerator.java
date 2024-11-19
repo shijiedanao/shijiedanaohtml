@@ -99,16 +99,17 @@ public class NewsGenerator {
         String[] features = CATEGORY_FEATURES.get(category);
         String[] products = CATEGORY_PRODUCTS.get(category);
         
-        // 生成2-4段内容
-        int paragraphs = 2 + random.nextInt(3);
+        // 生成2-3段内容，避免过长
+        int paragraphs = 2 + random.nextInt(2);
         for (int i = 0; i < paragraphs; i++) {
             content.append(generateParagraph(category, products, features));
             if (i < paragraphs - 1) {
-                content.append(" ");
+                content.append("\n\n"); // 使用换行符分隔段落
             }
         }
         
-        return content.toString();
+        // 检查并移除可能的乱码字符
+        return content.toString().replaceAll("[^\\p{L}\\p{N}\\p{P}\\s]", "");
     }
     
     private static String generateParagraph(String category, String[] products, String[] features) {
