@@ -495,10 +495,17 @@ body {
 }
 
 .share-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     background: #f8f8f8;
     border-radius: 8px;
     padding: 16px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
+}
+
+.preview-text {
+    order: 1;
 }
 
 .preview-image {
@@ -506,9 +513,9 @@ body {
     aspect-ratio: 1/1;
     border-radius: 8px;
     object-fit: contain;
-    margin-bottom: 12px;
     background-color: #fff;
     padding: 8px;
+    order: 2;
 }
 
 .preview-text h4 {
@@ -1417,7 +1424,7 @@ body {
     display: none;
 }
 
-/* 暗黑模式样式 */
+/* 暗黑模式���式 */
 [data-theme="dark"] {
     background-color: #1a1a1a;
     color: #e0e0e0;
@@ -2447,10 +2454,29 @@ body {
 
 /* 分享预览区域 */
 .share-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
     background: #f8f8f8;
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 20px;
+}
+
+/* 预览文本区域 */
+.preview-text {
+    order: 1;
+}
+
+/* 预览图片 */
+.preview-image {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    object-fit: contain;
+    background-color: #fff;
+    padding: 8px;
+    order: 2;
 }
 
 /* 分享网格布局 */
@@ -2462,76 +2488,6 @@ body {
     background: #f8f8f8;
     border-radius: 8px;
     margin-top: 16px;
-    flex-wrap: nowrap; /* 防止换行 */
-}
-
-/* 分享项目样式 */
-.share-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 4px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    min-width: 0; /* 允许内容收缩 */
-}
-
-/* 分享图标容器 */
-.share-icon-wrapper {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f5f5f5;
-    border-radius: 8px;
-    flex-shrink: 0; /* 防止图标被压缩 */
-}
-
-/* 分享图标 */
-.share-icon-wrapper img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain; /* 保持图标比例 */
-}
-
-/* 分享名称 */
-.share-name {
-    font-size: 0.8rem;
-    color: #666;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 100%;
-}
-
-/* 移动端适配 */
-@media screen and (max-width: 767px) {
-    .share-card {
-        width: 90%;
-        max-width: 350px;
-    }
-
-    .share-card-content {
-        padding: 15px;
-    }
-
-    .share-grid {
-        padding: 12px;
-        gap: 6px;
-    }
-
-    .share-icon-wrapper {
-        width: 36px;
-        height: 36px;
-    }
-
-    .share-icon-wrapper img {
-        width: 20px;
-        height: 20px;
-    }
+    flex-wrap: nowrap;
 }
  
