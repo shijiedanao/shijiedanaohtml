@@ -96,7 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 播放提示音的函数
     function playNotificationSound() {
-        if (soundCheckbox.checked) {
+        const soundCheckbox = document.getElementById('soundAlert');
+        const notificationSound = document.getElementById('notificationSound');
+        
+        if (soundCheckbox && soundCheckbox.checked && notificationSound) {
             notificationSound.currentTime = 0;
             notificationSound.play().catch(error => {
                 console.log('播放提示音失败:', error);
@@ -149,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const contentTemplate = contentTemplates[category] || [
                 `该${category}工具在功能和性能方面实现重大突破。最新版本引入了多项创新特性，显著提升了用户体验。\n\n` +
                 `核心更新包括：1. 性能优化提升40%；2. 新增高级功能模块；3. 界面交互重设计；4. 云端协作增强。\n\n` +
-                `用户反馈表明，新版��在专业应用场景中出色，为行业带来了新的可能性。开发团队表示将继续优化和完善功能。`,
+                `用户反馈表明，新版在专业应用场景中出色，为行业带来了新的可能性。开发团队表示将继续优化和完善功能。`,
                 
                 `这次更新着重提升了系统的智能化水平和处理效率。通过深度学习算法的优化，系统现在能够更好地理解和满足用户需求。\n\n` +
                 `主要特性：1. 智能推荐系统；2. 自动化工作流；3. 实时协作功能；4. 专业模板库。\n\n` +
@@ -347,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', currentTheme);
         
-        // 切��主题
+        // 切换主题
         darkModeToggle.addEventListener('click', () => {
             console.log('Dark mode toggle clicked'); // 调试用
             
@@ -382,21 +385,17 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             showLoading();
             
-            // 这里是实际获取新闻的API调用
-            // const response = await fetch('your-api-endpoint');
-            // const data = await response.json();
-            
             // 模拟获取到新闻
             const newNews = {
                 time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }),
                 title: '【突破性进展】OpenAI发布GPT-5模型',
-                content: '该模型在多模态理解和语言能力上取得重大突破。在最新的基准测试中，模型表现超越了人类专家水平。研究人员表示，这一突破将为人工智能的发展带来革命性的变化。具体改进包括：1. 上下文理解能力提升40%；2. 多语言翻译准确率提高35%；3. 代码生成效率提升50%；4. 图像理解和生成能力显著增强。',
+                content: '该模型在多模态理解和语言能力上取得重大突破...',
                 category: '大模型'
             };
             
             // 如果有新内容，添加到列表并播放提示音
             if (newNews) {
-                addNewsItem(newNews.time, newNews.title, newNews.content, newNews.category, true); // true 表示是新消息
+                addNewsItem(newNews.time, newNews.title, newNews.content, newNews.category);
                 playNotificationSound(); // 有新内容时播放提示音
             }
 
