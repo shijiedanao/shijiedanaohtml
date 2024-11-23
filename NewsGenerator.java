@@ -4,13 +4,13 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class NewsGenerator {
-    private static final String[] CATEGORIES = {"大模型", "绘画", "写作", "编程", "语音", "视频", "其他"};
+    private static final String[] CATEGORIES = {"模型", "绘画", "写作", "编程", "语音", "视频", "其他"};
     private static final String[] COMPANIES = {"OpenAI", "Google", "微软", "百度", "阿里巴巴", "腾讯", "Meta", 
         "Anthropic", "Stability AI", "Midjourney", "Adobe", "华为", "商汤科技", "科大讯飞"};
     
     // 为每个分类定义特定的产品
     private static final Map<String, String[]> CATEGORY_PRODUCTS = new HashMap<>() {{
-        put("大模型", new String[]{"ChatGPT", "Claude", "Gemini", "文心一言", "通义千问", "智谱AI", "讯飞星火"});
+        put("模型", new String[]{"ChatGPT", "Claude", "Gemini", "文心一言", "通义千问", "智谱AI", "讯飞星火"});
         put("绘画", new String[]{"DALL-E", "Midjourney", "Stable Diffusion", "百度绘画", "阿里通义万相", "腾讯意像"});
         put("写作", new String[]{"ChatGPT", "Claude", "文心一言", "通义千问", "写作助手", "智能编辑器"});
         put("编程", new String[]{"GitHub Copilot", "Amazon CodeWhisperer", "百度开发助手", "腾讯代码助手"});
@@ -21,12 +21,12 @@ public class NewsGenerator {
 
     // 为每个分类定义特定的特性
     private static final Map<String, String[]> CATEGORY_FEATURES = new HashMap<>() {{
-        put("大模型", new String[]{"多模态能力", "上下文理解", "知识推理", "自然语言处理", "跨语言能力"});
+        put("模型", new String[]{"多模态能力", "上下文理解", "知识推理", "自然语言处理", "跨语言能力"});
         put("绘画", new String[]{"人物生成", "场景合成", "风格迁移", "高清渲染", "艺术创作"});
         put("写作", new String[]{"内容生成", "文案创作", "智能纠错", "风格转换", "多语言翻译"});
         put("编程", new String[]{"代码补全", "bug修复", "重构建议", "单元测试", "文档生成"});
         put("语音", new String[]{"语音识别", "语音合成", "实时翻译", "声纹识别", "音频处理"});
-        put("视频", new String[]{"视频生成", "场景合成", "特效制作", "动作捕捉", "视频编辑"});
+        put("视频", new String[]{"视频生成", "场景合成", "特效制作", "��作捕捉", "视频编辑"});
         put("其他", new String[]{"智能交互", "数据分析", "硬件优化", "算法升级", "平台集成"});
     }};
 
@@ -90,7 +90,7 @@ public class NewsGenerator {
         } else if (random.nextBoolean()) {
             return String.format("【重磅】%s正式%s%s相关%s", company, action, product, feature);
         } else {
-            return String.format("【最新】%s将为%s%s全新%s", company, product, action, feature);
+            return String.format("【最新】%s正式%s%s相关%s", company, action, product, feature);
         }
     }
     

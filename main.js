@@ -1,4 +1,46 @@
+// 在文件开头添加全局标志
+let hasPlayedSound = false;
+let lastPlayTime = 0;
+const SOUND_COOLDOWN = 1000; // 1秒内不重复播放
+
 document.addEventListener('DOMContentLoaded', () => {
+    // 创建音频元素
+    const audio = document.createElement('audio');
+    audio.id = 'notificationSound';
+    audio.src = './notification.mp3';  // 确保音频文件在正确的位置
+    document.body.appendChild(audio);
+
+    // 播放提示音的函数
+    function playNotificationSound() {
+        const soundCheckbox = document.getElementById('soundAlert');
+        const notificationSound = document.getElementById('notificationSound');
+        const currentTime = Date.now();
+        
+        // 检查是否在冷却时间内
+        if (currentTime - lastPlayTime < SOUND_COOLDOWN) {
+            return;
+        }
+        
+        if (soundCheckbox && soundCheckbox.checked && notificationSound) {
+            notificationSound.currentTime = 0;
+            notificationSound.volume = 1.0;
+            
+            notificationSound.play().then(() => {
+                lastPlayTime = currentTime;
+                hasPlayedSound = true;
+                console.log('声音播放成功');
+            }).catch(error => {
+                console.error('播放提示音失败:', error);
+            });
+        }
+    }
+
+    // 确保声音复选框默认选中
+    const soundCheckbox = document.getElementById('soundAlert');
+    if (soundCheckbox) {
+        soundCheckbox.checked = true;
+    }
+
     // 倒计时功能
     const autoRefreshCheckbox = document.getElementById('autoRefresh');
     const countdownSpan = document.getElementById('countdown');
@@ -85,28 +127,6 @@ document.addEventListener('DOMContentLoaded', () => {
     updateTime();
     setInterval(updateTime, 1000);
 
-    // 添加声音提醒功能
-    const soundCheckbox = document.getElementById('soundAlert');
-    const alertSound = document.getElementById('alertSound');
-    const notificationSound = document.getElementById('notificationSound');
-
-    // 设置默认选中状态
-    soundCheckbox.checked = true;
-    autoRefreshCheckbox.checked = true;
-
-    // 播放提示音的函数
-    function playNotificationSound() {
-        const soundCheckbox = document.getElementById('soundAlert');
-        const notificationSound = document.getElementById('notificationSound');
-        
-        if (soundCheckbox && soundCheckbox.checked && notificationSound) {
-            notificationSound.currentTime = 0;
-            notificationSound.play().catch(error => {
-                console.log('播放提示音失败:', error);
-            });
-        }
-    }
-
     // 测试数据生成函数
     function generateTestData(count = 100) {
         const categories = ['大模型', '绘画', '写作', '编程', '语音', '视频'];
@@ -117,7 +137,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // 添加更多内容模板
         const contentTemplates = {
             '大模型': [
-                '该模型在多模态理解和语言能力上取得重大突破。在最新的基准测试中，模表现超越了人类专家水平。研究人员表示，这一突破将为人工智能的发展带来革命性的变化。\n\n' +
+                '该模型在多模态理解和��言能力上取得重大突破。在最新的基准测试中，模表现超越了人类专家水平。研究人员表示，这一突破将为人工智能的发展带来革命性的变化。\n\n' +
                 '具体改进包括：1. 上下文理解能力提升40%；2. 多语言翻译准确率提高35%；3. 代码生成效率提升50%；4. 图像理解和生成能力显著增强。\n\n' +
                 '此外，新模型还具备更强的安全性和可控性，可以更好地遵循人类价值观和伦理准则。研究团队表示，这些进展将帮助AI更好地服务人类社会。',
                 
@@ -148,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentTime = new Date(currentTime.getTime() - Math.floor(Math.random() * 180000));
             const timeString = `${currentTime.getHours().toString().padStart(2, '0')}:${currentTime.getMinutes().toString().padStart(2, '0')}`;
             
-            // 使用更详细的内容模板
+            // 使用更详细的内容
             const contentTemplate = contentTemplates[category] || [
                 `该${category}工具在功能和性能方面实现重大突破。最新版本引入了多项创新特性，显著提升了用户体验。\n\n` +
                 `核心更新包括：1. 性能优化提升40%；2. 新增高级功能模块；3. 界面交互重设计；4. 云端协作增强。\n\n` +
@@ -224,7 +244,11 @@ document.addEventListener('DOMContentLoaded', () => {
         if (newsListElement) {
             newsListElement.innerHTML = '';
             loadNews(true);  // 加载第一页
-            playNotificationSound(); // 页面初始化时播放提示音
+            
+            // 只在首次加载时播放声音
+            if (!hasPlayedSound) {
+                playNotificationSound();
+            }
         }
     }
 
@@ -245,6 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             if (isFirstLoad) {
                 document.querySelector('.news-list').innerHTML = '';
+                playNotificationSound(); // 刷新时播放提示音
             }
 
             newsToLoad.forEach(news => {
@@ -279,9 +304,38 @@ document.addEventListener('DOMContentLoaded', () => {
             
             currentCategory = link.textContent;
             currentPage = 1;  // 重置页码
-            loadNews(true);  // 重新加载第一页
+            loadNewsWithoutSound(true);  // 使用不带声音的加载函数
         });
     });
+
+    // 添加一个不带声音的加载函数
+    function loadNewsWithoutSound(isFirstLoad = false) {
+        if (isLoading) return;
+        isLoading = true;
+        showLoading();
+
+        let filteredNews = currentCategory === '全部' 
+            ? allNews 
+            : allNews.filter(news => news.category === currentCategory);
+
+        const start = (currentPage - 1) * pageSize;
+        const end = start + pageSize;
+        const newsToLoad = filteredNews.slice(start, end);
+
+        setTimeout(() => {
+            if (isFirstLoad) {
+                document.querySelector('.news-list').innerHTML = '';
+            }
+
+            newsToLoad.forEach(news => {
+                addNewsItemWithoutSound(news.time, news.title, news.content, news.category);
+            });
+
+            hideLoading();
+            isLoading = false;
+            currentPage++;
+        }, 500);
+    }
 
     // 加载动画
     function showLoading() {
@@ -385,18 +439,60 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             showLoading();
             
-            // 模拟获取到新闻
+            // 生成一条新的测试数据
+            const categories = ['大模型', '绘画', '写作', '程', '语音', '视频'];
+            const prefixes = ['【突破性进展】', '【行业动态】', '【技术创新】', '【新品发布】', '【重要更新】', '【产品升级】'];
+            const companies = ['OpenAI', '百度', '谷歌', 'Anthropic', '微软', 'Meta', 'Stability AI', 'Midjourney', 'Adobe', '腾讯', '阿里巴巴'];
+            
+            // 随机选择内容
+            const category = categories[Math.floor(Math.random() * categories.length)];
+            const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+            const company = companies[Math.floor(Math.random() * companies.length)];
+            
+            // 根据分类生成不同的内容
+            let content = '';
+            let title = '';
+            
+            switch(category) {
+                case '大模型':
+                    title = `${prefix}${company}发布新一代AI模型`;
+                    content = `该公司最新发布的AI模型在多项基准测试中取得突破性进展。主要改进包括：\n\n` +
+                             `1. 上下文理解能力提升${Math.floor(Math.random() * 30 + 20)}%\n` +
+                             `2. 多语言翻译准确率提高${Math.floor(Math.random() * 20 + 15)}%\n` +
+                             `3. 代码生成效率提升${Math.floor(Math.random() * 40 + 20)}%\n` +
+                             `4. 推理能力显著增强`;
+                    break;
+                case '绘画':
+                    title = `${prefix}${company}推出新版AI绘画工具`;
+                    content = `新版本在图像生成质量上取得显著提升。核心更新包括：\n\n` +
+                             `1. 人物面部节优化\n` +
+                             `2. 光影效果更自然\n` +
+                             `3. 构图控制更精准\n` +
+                             `4. 新增多种艺术风格`;
+                    break;
+                default:
+                    title = `${prefix}${company}发布${category}领域重要更新`;
+                    content = `该更新带来多项创新功能和性能提升。主要特性：\n\n` +
+                             `1. 处理速度提升${Math.floor(Math.random() * 40 + 30)}%\n` +
+                             `2. 新增智能辅助功能\n` +
+                             `3. 用户界面优化\n` +
+                             `4. 云端协作增强`;
+            }
+
             const newNews = {
                 time: new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' }),
-                title: '【突破性进展】OpenAI发布GPT-5模型',
-                content: '该模型在多模态理解和语言能力上取得重大突破...',
-                category: '大模型'
+                title: title,
+                content: content,
+                category: category
             };
             
             // 如果有新内容，添加到列表并播放提示音
             if (newNews) {
                 addNewsItem(newNews.time, newNews.title, newNews.content, newNews.category);
-                playNotificationSound(); // 有新内容时播放提示音
+                // 只有在不是初始化播放声音的情况下才播放
+                if (hasPlayedSound) {
+                    playNotificationSound();
+                }
             }
 
             hideLoading();
@@ -462,6 +558,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 初始化分享功能
+    // 初始化分享能
     initShareFeature();
 }); 

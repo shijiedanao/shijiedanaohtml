@@ -268,11 +268,10 @@ body {
     top: 1.1rem;
     width: 5px;
     height: 5px;
-    background: #2d5c9e;
+    background: #0A9068;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    transition: all 0.3s ease;
 }
 
 .news-item:not(:last-child)::after {
@@ -783,7 +782,7 @@ body {
     left: -6px;
 }
 
-/* 分类标签样式 */
+/* 分类标签样 */
 .news-category {
     color: #666;
     white-space: nowrap;
@@ -1164,7 +1163,7 @@ body {
     padding-left: 0;
 }
 
-/* 新闻详细内样式 */
+/* 新闻详细内式 */
 .news-detail {
     color: #666;
     line-height: 1.5;
@@ -1228,30 +1227,37 @@ body {
     top: 1.1rem;
     width: 5px;
     height: 5px;
-    background: #2d5c9e;
+    background: #0A9068;
     border-radius: 50%;
     transform: translate(-50%, -50%);
     z-index: 1;
-    transition: all 0.3s ease;
 }
 
-/* 悬停时小圆点样式 */
+/* 第一个新闻项的小圆点动画 */
+.news-item:first-child::before {
+    width: 6px;
+    height: 6px;
+    animation: live-pulse 2s ease-out infinite;
+}
+
+/* 实时脉冲动画 */
+@keyframes live-pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(10, 144, 104, 0.8);
+    }
+    70% {
+        box-shadow: 0 0 0 4px rgba(10, 144, 104, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(10, 144, 104, 0);
+    }
+}
+
+/* 悬停效果 */
 .news-item:hover::before {
-    background: #f0a500;
     transform: translate(-50%, -50%) scale(1.2);
-    box-shadow: 0 0 8px rgba(240, 165, 0, 0.6);
-}
-
-/* 新闻项悬停效果 */
-.news-item {
-    position: relative;
-    display: flex;
-    align-items: flex-start;
-    padding: 15px 0 8px 15px;
-    border-bottom: 1.5px solid #e0e0e0;
-    margin-left: 30px;
-    width: calc(100% - 30px);
-    transition: background-color 0.3s ease;
+    box-shadow: 0 0 8px rgba(10, 144, 104, 0.6);
+    background: #0A9068;
 }
 
 /* 动端适配 */
@@ -1273,20 +1279,28 @@ body {
     /* 时间显示域调整 */
     .current-time {
         width: 140px;
-        height: 50px;
+        height: 90px;
         padding: 3px;
     }
 
     .day-number {
-        font-size: 3rem;
+        font-size: 2.8rem;
+        margin-left: 5px;
     }
 
-    .month {
-        font-size: 1.2rem;
+    .date-right {
+        padding-left: 8px;
+        margin-top: -20px;
     }
 
-    .year, .weekday {
-        font-size: 0.7rem;
+    .time-box {
+        font-size: 1.3rem;
+        margin-top: -4px;
+        width: 70%;  /* 移动端下更窄 */
+    }
+
+    .time-separator {
+        margin: 0 1px;
     }
 
     /* 分类导航调整 */
@@ -1424,7 +1438,7 @@ body {
     display: none;
 }
 
-/* 暗黑模式���式 */
+/* 暗黑模式式 */
 [data-theme="dark"] {
     background-color: #1a1a1a;
     color: #e0e0e0;
@@ -1562,7 +1576,7 @@ body {
 }
 
 [data-theme="dark"] .title-section h1 .black {
-    color: #fff;  /* 黑色部分变白色 */
+    color: #fff;  /* 黑色部分变色 */
 }
 
 [data-theme="dark"] .subtitle {
@@ -1678,7 +1692,7 @@ body {
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    width: 100%;  /* 确保按钮占宽度 */
+    width: 100%;  /* 确保按钮占度 */
     margin-top: 20px;  /* 增加上边距 */
 }
 
@@ -1848,7 +1862,7 @@ body {
     background: #254b82;
 }
 
-/* 验证码按钮禁用状态 */
+/* 验码按钮禁用状态 */
 .send-code-btn:disabled {
     background: #ccc;
     cursor: not-allowed;
@@ -2226,7 +2240,7 @@ body {
         width: 100%;
     }
 
-    /* 验证码输入框组合 */
+    /* 证码输入框组合 */
     .verify-input {
         width: 100%;
     }
@@ -2261,171 +2275,38 @@ body {
     }
 }
 
-/* 右侧期信息 */
+/* 右侧日期信息 */
 .date-right {
     display: flex;
     flex-direction: column;
-    align-items: center;  /* 水平居中 */
-    justify-content: flex-start;  /* 改为顶部对齐 */
+    align-items: center;
+    justify-content: flex-start;
     width: 50%;
-    padding: 4px 0 4px 10px;  /* 减小左内边距 */
-    height: 100%;  /* 保持高度 */
-    padding-top: 2px;  /* 减小顶部内边距 */
-    margin-top: -24px;  /* 保持文字上移 */
-    border-left: none;  /* 删除竖线 */
+    padding: 4px 0 4px 10px;
+    height: 100%;
+    padding-top: 6px;  /* 保持顶部内边距 */
+    margin-top: -28px;  /* 再往上移2px */
+    border-left: none;
 }
 
 /* 月份、年份、星期 */
 .month, .year, .weekday {
     font-size: 0.8rem;
     color: #3D3D3D;
-    line-height: 1.2;  /* 保持行高 */
+    line-height: 1.4;  /* 保持行高 */
     font-weight: bold;
-    text-align: center;  /* 保持文字居中 */
-    width: 100%;  /* 保持宽度 */
-    margin: 0;  /* 保持外边距 */
-    white-space: nowrap;  /* 防止文字换行 */
-    letter-spacing: -0.5px;  /* 减小字间距 */
-}
-
-/* 暗黑模式适配 */
-[data-theme="dark"] .date-right {
-    border-left-color: #333;
-}
-
-[data-theme="dark"] .month,
-[data-theme="dark"] .year,
-[data-theme="dark"] .weekday {
-    color: #e0e0e0;
-}
-
-/* 时间显示区域 */
-.time-box {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    font-size: 1.5rem;
-    color: #3D3D3D;
-    font-weight: bold;
-    width: 80%;  /* 减小宽度，使其居中 */
-    margin: 0 auto;
-    padding-top: 0;
-    margin-top: -8px;
-}
-
-.time-separator {
-    margin: 0 1px;  /* 减小分隔符间距 */
-}
-
-/* 移动端适配 */
-@media screen and (max-width: 767px) {
-    .current-time {
-        width: 140px;
-        height: 90px;
-        padding: 3px;
-    }
-
-    .day-number {
-        font-size: 2.8rem;
-        margin-left: 5px;
-    }
-
-    .date-right {
-        padding-left: 8px;
-        margin-top: -20px;
-    }
-
-    .time-box {
-        font-size: 1.3rem;
-        margin-top: -4px;
-        width: 70%;  /* 移动端下更窄 */
-    }
-
-    .time-separator {
-        margin: 0 1px;
-    }
-}
-
-/* 分享网格布局 */
-.share-grid {
-    display: flex;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 16px;
-    background: #f8f8f8;  /* 添加背景色 */
-    border-radius: 8px;  /* 添加圆角 */
-    margin-top: 16px;
-    flex-wrap: nowrap; /* 防止换行 */
-}
-
-/* 分享项目样式 */
-.share-item {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: 8px 4px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    min-width: 0; /* 允许内容收缩 */
-}
-
-/* 分享图标容器 */
-.share-icon-wrapper {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #f5f5f5;
-    border-radius: 8px;
-    flex-shrink: 0; /* 防止图标被压缩 */
-}
-
-/* 分享图标 */
-.share-icon-wrapper img {
-    width: 24px;
-    height: 24px;
-    object-fit: contain; /* 保持图标比例 */
-}
-
-/* 分享名称 */
-.share-name {
-    font-size: 0.8rem;
-    color: #666;
+    text-align: center;
+    width: 100%;
+    margin: 0;
     white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    max-width: 100%;
+    letter-spacing: -0.5px;
 }
 
 /* 移动端适配 */
 @media screen and (max-width: 767px) {
-    .share-card {
-        width: 90%;
-        max-width: 350px;
-    }
-
-    .share-card-content {
-        padding: 15px;
-    }
-
-    .share-grid {
-        padding: 12px;
-        gap: 6px;
-    }
-
-    .share-icon-wrapper {
-        width: 36px;
-        height: 36px;
-    }
-
-    .share-icon-wrapper img {
-        width: 20px;
-        height: 20px;
+    .date-right {
+        padding-top: 4px;  /* 移动端下稍微减小内边距 */
+        margin-top: -26px;
     }
 }
 
@@ -2454,29 +2335,10 @@ body {
 
 /* 分享预览区域 */
 .share-preview {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
     background: #f8f8f8;
     border-radius: 8px;
     padding: 16px;
     margin-bottom: 20px;
-}
-
-/* 预览文本区域 */
-.preview-text {
-    order: 1;
-}
-
-/* 预览图片 */
-.preview-image {
-    width: 100%;
-    aspect-ratio: 1/1;
-    border-radius: 8px;
-    object-fit: contain;
-    background-color: #fff;
-    padding: 8px;
-    order: 2;
 }
 
 /* 分享网格布局 */
@@ -2488,6 +2350,22 @@ body {
     background: #f8f8f8;
     border-radius: 8px;
     margin-top: 16px;
-    flex-wrap: nowrap;
+}
+
+/* 暗黑模式适配 */
+[data-theme="dark"] .share-card {
+    background: #1a1a1a;
+}
+
+[data-theme="dark"] .share-card-content {
+    background: #1a1a1a;
+}
+
+[data-theme="dark"] .share-preview {
+    background: #2a2a2a;
+}
+
+[data-theme="dark"] .share-grid {
+    background: #2a2a2a;
 }
  
